@@ -1,0 +1,9 @@
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" backgroundColor="primary" color="accent">
+    <a mat-tab-link disabled>
+        <mat-icon>public</mat-icon>
+    </a>
+    <a mat-tab-link *ngFor="let page of pageRoutes"
+       (click)="activeLink = page.route"
+       [active]="activeLink == page.route"> {{page.name}} </a>
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
