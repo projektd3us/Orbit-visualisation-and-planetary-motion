@@ -11,7 +11,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  //Owner service
+  //T service
   getT(): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + '/T');
   }

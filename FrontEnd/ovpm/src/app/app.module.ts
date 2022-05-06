@@ -7,18 +7,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TopMenuComponent } from './components/top-menu/top-menu.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { MaterialModule } from './material.module';
+import { DiscoverPageComponent } from './components/discover-page/discover-page.component';
+import { DiscoveryMethodsComponent } from './components/discovery-methods/discovery-methods.component';
+import { SimulationPageComponent } from './components/simulation-page/simulation-page.component';
+import { HttpClientModule } from '@angular/common/http';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TopMenuComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    DiscoverPageComponent,
+    DiscoveryMethodsComponent,
+    SimulationPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

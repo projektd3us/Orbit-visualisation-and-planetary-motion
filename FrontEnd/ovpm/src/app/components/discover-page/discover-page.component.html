@@ -1,0 +1,18 @@
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+
+      <h2>Discovery Methods</h2>
+      <div *ngFor="let item of discoveryMethods" class="btn-wrapper">
+        <button mat-button color="accent" class="type-btn">{{item.name}}</button>
+      </div>
+
+    </mat-drawer>
+  
+    <div class="example-sidenav-content">
+      <button type="button" mat-fab [color]="drawer.opened ? 'accent' : 'primary'" (click)="drawer.toggle()" class="menu-btn">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <app-discovery-methods></app-discovery-methods>
+    </div>
+  
+  </mat-drawer-container>
