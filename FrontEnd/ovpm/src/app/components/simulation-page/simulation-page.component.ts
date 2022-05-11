@@ -48,7 +48,7 @@ export class SimulationPageComponent implements OnInit, AfterViewInit {
 
 
   onSubmit(){
-    this.nasa.getPlanetDataByName(this.planetForm.value.pl_name).subscribe( resp => {
+    this.nasa.getPlanetDataByName({pl_name: this.planetForm.value.pl_name}).subscribe( resp => {
 
       this.dataSource.data = resp;
     });

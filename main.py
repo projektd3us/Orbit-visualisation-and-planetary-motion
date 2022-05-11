@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
-
+import querys
 
 # api setup
 app = FastAPI()
@@ -24,9 +24,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
 # end api setup
 
 
+# apis
 class SimData(BaseModel):
     pl_name: str
     star_mass: Optional[float] = None
@@ -49,3 +52,10 @@ def read_root():
 def read_root():
     sim.stopPlotOrbit()
     return {"Sim v1 stopped"}
+
+
+# data apis
+@app.post("/getTableData/")
+def read_root(simData: SimData):
+    tableData = querys.getPlanetBasicsByName(simData.pl_name)
+    return tableData
