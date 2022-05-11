@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { NasaService } from 'src/app/services/nasa.service';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-simulation-page',
@@ -34,7 +35,7 @@ export class SimulationPageComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor(private globals:GlobalsService, private formBuilder: FormBuilder, private nasa: NasaService ) { }
+  constructor(private globals:GlobalsService, private formBuilder: FormBuilder, private nasa: NasaService, private api:ApiService ) { }
 
   planetForm = this.formBuilder.group({
     pl_name: [''],
@@ -47,7 +48,7 @@ export class SimulationPageComponent implements OnInit, AfterViewInit {
 
 
   onSubmit(){
-    this.nasa.getPlanetList(this.planetForm.value.pl_name, this.planetForm.value.disc_method).subscribe( resp => {
+    this.nasa.getPlanetDataByName(this.planetForm.value.pl_name).subscribe( resp => {
 
       this.dataSource.data = resp;
     });
@@ -55,10 +56,19 @@ export class SimulationPageComponent implements OnInit, AfterViewInit {
 
   runSimulation(){
     this.isSimRunning = true;
+    // this.api.plotOrbitV1().subscribe( resp => {
+    //   console.log(resp);
+    // });
+    this.api.plotWithData(this.currentlySelectedPlanet).subscribe( resp => {
+      console.log(resp);
+    });
   }
 
   stopSimulation(){
     this.isSimRunning = false;
+    this.api.stopPlotOrbitV1().subscribe( resp => {
+      console.log(resp);
+    });
   }
 
   planetSelected(row: any){

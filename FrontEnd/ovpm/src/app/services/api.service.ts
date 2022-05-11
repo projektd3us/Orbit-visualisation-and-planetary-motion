@@ -7,24 +7,36 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  readonly APIUrl = "http://localhost:5000/api";
+  readonly APIUrl = "http://127.0.0.1:8000";
 
   constructor(private http: HttpClient) { }
 
   //T service
-  getT(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/T');
+  plotOrbitV1(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + '/plotOrbitV1');
   }
 
-  addT(owner: any) {
-    return this.http.post<any>(this.APIUrl + '/T', owner);
+  stopPlotOrbitV1(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + '/stopPlotOrbitV1');
   }
 
-  updateT(owner: any) {
-    return this.http.put<any>(this.APIUrl + '/T', owner);
+  plotWithData(simData: any) {
+    return this.http.post<any>(this.APIUrl + '/simulateWithData/', simData);
   }
 
-  deleteT(id: any) {
-    return this.http.delete<any>(this.APIUrl + '/T' + id);
-  }
+  // plotOrbitV2(): Observable<any[]> {
+  //   return this.http.get<any>(this.APIUrl + '/plotOrbitV2');
+  // }
+
+  // addT(owner: any) {
+  //   return this.http.post<any>(this.APIUrl + '/T', owner);
+  // }
+
+  // updateT(owner: any) {
+  //   return this.http.put<any>(this.APIUrl + '/T', owner);
+  // }
+
+  // deleteT(id: any) {
+  //   return this.http.delete<any>(this.APIUrl + '/T' + id);
+  // }
 }

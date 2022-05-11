@@ -12,11 +12,13 @@ export class NasaService {
 
   constructor(private http: HttpClient) { }
 
-  // getPlanetDataByName(pl_name: string): Observable<any[]> {
-  //   return this.http.get<any>("https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+distinct+pl_name,+pl_masse,+pl_dens+from+ps+where+pl_name+like+'%" + pl_name + "%'+and+pl_dens+>=+0+&format=json");
-  // }
+  getPlanetDataByName(pl_name: string): Observable<any[]> {
+    return this.http.get<any>("https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname,pl_orbsmax,pl_rade,pl_masse,pl_ratror,st_spectype,st_rad,st_mass,discoverymethod+from+ps+where+pl_name+like+'%"+ pl_name +"%'&format=json");
+  }
 
-
+  getPlanetList(pl_name: string, disc_method: string){
+    return of(this.planetsList);
+  }
 
   //mock
   planetsList=[
@@ -1996,9 +1998,7 @@ export class NasaService {
     "disc_pubdate": "2021-07"}
     ]
 
-  getPlanetList(pl_name: string, disc_method: string){
-    return of(this.planetsList);
-  }
+
 
 
 
