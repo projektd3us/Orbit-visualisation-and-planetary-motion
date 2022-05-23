@@ -17,8 +17,8 @@ basicFields = ['pl_name', 'hostname', 'pl_orbsmax', 'pl_rade', 'pl_masse', 'pl_r
                'st_mass', 'discoverymethod']
 
 
-def basicQueries(planetName):
-    return [f'pl_name like \'%{planetName}%\'']
+def basicQueries(planetName, discoveryMethod):
+    return [f'pl_name like \'%{planetName}%\'', f'discoverymethod like \'%{discoveryMethod}%\'']
 
 
 # apis and stuff
@@ -49,15 +49,15 @@ def localQueryBuilder(ps: string, fieldList: [], fieldQueries: []):
     return local_query
 
 
-def getPlanetBasicsByName(planetName: string):
-    local_query = localQueryBuilder(basicPs, basicFields, basicQueries(planetName))
+def getPlanetBasicsByData(planetName: string, discoveryMethod: string):
+    local_query = localQueryBuilder(basicPs, basicFields, basicQueries(planetName, discoveryMethod))
     local_query = queryToRequestQuery(local_query)
     api_url = BaseApiBuilder(local_query, ResponseFormat.JSON)
     response = requests.get(api_url)
     return response.json()
 
-#
+
 # # main
 # if __name__ == '__main__':
-#     print(getPlanetBasicsByName('Cnc', ResponseFormat.JSON))
-#
+#     print(getPlanetBasicsByData('Kepler', 'Transit'))
+

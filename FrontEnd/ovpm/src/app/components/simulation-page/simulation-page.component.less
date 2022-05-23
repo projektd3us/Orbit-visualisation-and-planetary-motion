@@ -43,8 +43,32 @@ h1{
     font-size: 25px;
     
     padding: 0 10px;
-  }
+}
 
-  .sec-sub {
+.sec-sub {
     margin-top:-10px;
-  }
+}
+
+.info-button{
+    right: 10px;
+    top: 10px;
+    position: absolute;
+}
+
+
+.spinner-overlay{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    mat-progress-spinner{
+        position: fixed;
+        left: 48vw;
+        top: 45vh;
+    }
+}
+.hide-overlay{
+    display: none;
+}

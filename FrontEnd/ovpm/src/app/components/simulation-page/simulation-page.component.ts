@@ -12,11 +12,12 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./simulation-page.component.less']
 })
 export class SimulationPageComponent implements OnInit, AfterViewInit {
+  isLoading= false;
 
   isSimRunning = false; // sim running logic
   discoveryMethods = this.globals.discoveryMethods; // get from globals
 
-  displayedColumns: string[] = ['pl_name', 'hostname', 'discoverymethod', 'disc_pubdate','pl_masse', 'pl_dens'];
+  displayedColumns: string[] = ['pl_name', 'hostname', 'discoverymethod'];
   dataSource = new MatTableDataSource<any>([]);
   clickedRows = new Set<any>();
 
@@ -39,7 +40,7 @@ export class SimulationPageComponent implements OnInit, AfterViewInit {
 
   planetForm = this.formBuilder.group({
     pl_name: [''],
-    disc_method: ['']
+    discoverymethod: ['']
   });
 
   ngOnInit(): void {
@@ -48,17 +49,19 @@ export class SimulationPageComponent implements OnInit, AfterViewInit {
 
 
   onSubmit(){
-    this.nasa.getPlanetDataByName({pl_name: this.planetForm.value.pl_name}).subscribe( resp => {
-
+    this.isLoading = true;
+    this.nasa.getPlanetDataByName({
+      pl_name: this.planetForm.value.pl_name, 
+      discoverymethod: this.planetForm.value.discoverymethod
+    })
+    .subscribe( resp => {
+      this.isLoading = false;
       this.dataSource.data = resp;
     });
   }
 
   runSimulation(){
     this.isSimRunning = true;
-    // this.api.plotOrbitV1().subscribe( resp => {
-    //   console.log(resp);
-    // });
     this.api.plotWithData(this.currentlySelectedPlanet).subscribe( resp => {
       console.log(resp);
     });
@@ -66,7 +69,7 @@ export class SimulationPageComponent implements OnInit, AfterViewInit {
 
   stopSimulation(){
     this.isSimRunning = false;
-    this.api.stopPlotOrbitV1().subscribe( resp => {
+    this.api.stopPlotOrbit().subscribe( resp => {
       console.log(resp);
     });
   }

@@ -1,6 +1,5 @@
 from typing import Optional
 from fastapi import FastAPI
-import simV2
 import sim
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
@@ -32,23 +31,25 @@ app.add_middleware(
 # apis
 class SimData(BaseModel):
     pl_name: str
-    star_mass: Optional[float] = None
-    star_radius: Optional[float] = None
+    discoverymethod: str
+    st_mass: Optional[float] = None
+    st_rad: Optional[float] = None
+    hostname: Optional[str] = None
 
 
-@app.post("/simulateWithData/")
-async def create_item(simData: SimData):
+@app.post("/plotWithData/")
+def read_root(simData: SimData):
     sim.plotOrbitWithData(simData)
-    return simData
+    return {"Sim v1 stopped"}
 
 
-@app.get("/plotOrbitV1")
-def read_root():
-    sim.plotOrbit()
-    return {"Sim v1 started"}
+# @app.get("/plotOrbit")
+# def read_root():
+#     sim.plotOrbit()
+#     return {"Sim v1 started"}
 
 
-@app.get("/stopPlotOrbitV1")
+@app.get("/stopPlotOrbit")
 def read_root():
     sim.stopPlotOrbit()
     return {"Sim v1 stopped"}
@@ -56,6 +57,6 @@ def read_root():
 
 # data apis
 @app.post("/getTableData/")
-def read_root(simData: SimData):
-    tableData = querys.getPlanetBasicsByName(simData.pl_name)
+def create_item(simData: SimData):
+    tableData = querys.getPlanetBasicsByData(simData.pl_name, simData.discoverymethod)
     return tableData

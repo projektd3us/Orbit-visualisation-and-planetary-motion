@@ -3,13 +3,15 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-
 # https://towardsdatascience.com/use-python-to-create-two-body-orbits-a68aed78099c
 # https://towardsdatascience.com/how-to-animate-plots-in-python-2512327c8263
 # https://ssd.jpl.nasa.gov/horizons/app.html#/
+bigG = 6.67E-11
+
 
 # Earth Model
 def model_2BP(state, t):
+    # mu = simData.st_mass*bigG
     mu = 3.986004418E+05  # Earth's gravitational parameter
     # [km^3/s^2]
     x = state[0]
@@ -56,28 +58,6 @@ Y_Earth = r_Earth * np.sin(phi) * np.sin(theta)
 Z_Earth = r_Earth * np.cos(theta)
 
 
-def plotOrbit():
-    # Plotting Earth and Orbit
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
-    ax.plot_surface(X_Earth, Y_Earth, Z_Earth, color='blue', alpha=0.7)
-    ax.plot3D(X_Sat, Y_Sat, Z_Sat, 'black')
-    ax.view_init(30, 145)  # Changing viewing angle (adjust as needed)
-    plt.title('Two-Body Orbit')
-    ax.set_xlabel('X [km]')
-    ax.set_ylabel('Y [km]')
-    ax.set_zlabel('Z [km]')
-
-    # Make axes limits
-    xyzlim = np.array([ax.get_xlim3d(), ax.get_ylim3d(),
-                       ax.get_zlim3d()]).T
-    XYZlim = np.asarray([min(xyzlim[0]), max(xyzlim[1])])
-    ax.set_xlim3d(XYZlim)
-    ax.set_ylim3d(XYZlim)
-    ax.set_zlim3d(XYZlim * 3 / 4)
-    plt.show()
-
-
 def plotOrbitWithData(simData):
     # Plotting Earth and Orbit
     fig = plt.figure()
@@ -85,7 +65,7 @@ def plotOrbitWithData(simData):
     ax.plot_surface(X_Earth, Y_Earth, Z_Earth, color='blue', alpha=0.7)
     ax.plot3D(X_Sat, Y_Sat, Z_Sat, 'black')
     ax.view_init(30, 145)  # Changing viewing angle (adjust as needed)
-    plt.title(simData.pl_name)
+    plt.title('[' + simData.pl_name + "]\'s orbit around " + '[' + simData.hostname + ']')
     ax.set_xlabel('X [km]')
     ax.set_ylabel('Y [km]')
     ax.set_zlabel('Z [km]')

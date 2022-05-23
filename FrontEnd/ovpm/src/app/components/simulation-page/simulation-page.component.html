@@ -1,3 +1,7 @@
+<div class="spinner-overlay" [ngClass]="{'hide-overlay' : !isLoading}">
+    <mat-progress-spinner mode="indeterminate" ></mat-progress-spinner>
+</div>
+
 <div class="main-container">
     <div class="form-wrapper">
         <h1>Planet Search</h1>
@@ -10,7 +14,7 @@
 
             <mat-form-field appearance="fill">
                 <mat-label>Discovery Method</mat-label>
-                <mat-select formControlName="disc_method">
+                <mat-select formControlName="discoverymethod">
                     <mat-option *ngFor="let item of discoveryMethods" [value]="item.value">{{item.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -81,6 +85,9 @@
             <div mat-card-avatar>
                 <mat-icon class="avatar">public</mat-icon>
             </div>
+            <button mat-mini-fab color="primary" class="info-button" [disabled]="currentlySelectedPlanet.pl_name == 'Select a planet'">
+                <mat-icon>info</mat-icon>
+            </button>
             <mat-card-title>{{currentlySelectedPlanet.pl_name}}</mat-card-title>
             <mat-card-subtitle>
                 <p>Planet in {{currentlySelectedPlanet.hostname}}</p>
@@ -97,7 +104,7 @@
                 <p *ngIf="!(currentlySelectedPlanet.pl_masse != 0)"> Select a planet from the table</p>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-raised-button color="accent" [disabled]="isSimRunning || !(currentlySelectedPlanet.pl_masse != 0)" (click)="runSimulation()">
+                <button mat-raised-button color="accent" [disabled]="isSimRunning || !(currentlySelectedPlanet.pl_name != 'Select a planet')" (click)="runSimulation()">
                     Run Simulation
                     <mat-icon>play_arrow</mat-icon>
                 </button>

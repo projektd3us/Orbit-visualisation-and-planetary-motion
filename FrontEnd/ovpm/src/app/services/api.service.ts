@@ -12,16 +12,16 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   //T service
-  plotOrbitV1(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/plotOrbitV1');
+  plotOrbit(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + '/plotOrbit');
   }
 
-  stopPlotOrbitV1(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/stopPlotOrbitV1');
+  stopPlotOrbit(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + '/stopPlotOrbit');
   }
 
   plotWithData(simData: any) {
-    return this.http.post<any>(this.APIUrl + '/simulateWithData/', simData);
+    return this.http.post<any>(this.APIUrl + '/plotWithData/', simData);
   }
 
   // plotOrbitV2(): Observable<any[]> {
